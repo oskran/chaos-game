@@ -47,7 +47,28 @@ class ChaosGame:
         plt.axis("equal")
         plt.show()
 
+    def _starting_point(self):
+        w = np.zeros(self.n)
+
+        for i in range(w.size):
+            w[i] = np.random.random()
+
+        # Divide all weigths by the sum of the weigths so that they sum to one
+        w = w / np.sum(w)
+
+        point = [0, 0]
+
+        for i, c in enumerate(self.corners):
+            print(i, c)
+
+            point[0] = point[0] + c[0] * w[i]
+
+            point[1] = point[1] + c[1] * w[i]
+
+        return point
+
 
 game = ChaosGame(5, 0.5)
 
-game.plot_ngon()
+
+print(game._starting_point())
