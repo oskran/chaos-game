@@ -35,12 +35,23 @@ def random_point(corners):
     return point
 
 
+def random_corner_point(point, corners):
+
+    random_corner = np.random.randint(3)
+
+    halfway_point = (point + corners[random_corner]) / 2
+
+    return halfway_point
+
+
 corners = create_triangle()
+points = [random_point(corners)]
 
-for i in range(1000):
-    corners.append(random_point(corners))
+for i in range(1, 10000):
+    points.append(random_corner_point(points[i - 1], corners))
 
-plt.scatter(*zip(*corners))
+
+plt.scatter(*zip(*points[5:]))
 
 plt.axis("equal")
 plt.show()
