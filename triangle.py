@@ -47,9 +47,8 @@ def random_corner_point(point, corners):
 corners = create_triangle()
 points = [random_point(corners)]
 
-for i in range(1, 10000):
+for i in range(1, 1000):
     points.append(random_corner_point(points[i - 1], corners))
-
 
 plt.scatter(*zip(*points[5:]))
 
