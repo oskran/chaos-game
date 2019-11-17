@@ -30,15 +30,15 @@ class ChaosGame:
         """
         theta = np.linspace(0, (np.pi * 2), self.n + 1)
 
-        c = np.zeros(shape=(self.n, 2))
+        corners = np.zeros(shape=(self.n, 2))
 
         for i in range(self.n):
             c1 = np.sin(theta[i])
             c2 = np.cos(theta[i])
 
-            c[i] = [c1, c2]
+            corners[i] = [c1, c2]
 
-        self.corners = c
+        self.corners = corners
 
     def plot_ngon(self):
         """Plots the ngon
@@ -66,7 +66,9 @@ class ChaosGame:
         return point
 
     def iterate(self, steps, discard=5):
+        corner_list = np.zeros(shape=(steps,))
         random_corner = np.random.randint(self.n)
+        corner_list[0] = random_corner
 
         midway_point = (
             self.r * self.st_point + (1 - self.r) * self.corners[random_corner]
@@ -77,19 +79,44 @@ class ChaosGame:
 
         for i in range(1, steps):
             random_corner = np.random.randint(self.n)
+            corner_list[i] = random_corner
 
             points[i] = (
                 self.r * points[i - 1] + (1 - self.r) * self.corners[random_corner]
             )
 
-        return points[discard:]
+        self.corner_list = corner_list[discard:]
+        self.points = points[discard:]
+
+    def plot(self, color=False, cmap="jet"):
+        if color == True:
+            colors = self.corner_list
+        else:
+            colors = "black"
+
+        plt.scatter(*zip(*self.points), s=1, c=colors, cmap=cmap)
+
+        plt.axis("equal")
+
+    def show(self, color=False, cmap="jet"):
+        self.plot(color=color, cmap=cmap)
+        plt.show()
+
+    def savepng(self, outfile, color=False, cmap="jet"):
+
+        outfile = outfile.split(".")
+
+        if len(outfile) != 1:
+            assert outfile[1] == "png", "Output file format must be .png"
+
+        self.plot(color=color, cmap=cmap)
+
+        plt.savefig(outfile[0] + ".png", dpi=300)
 
 
 game = ChaosGame(3, 0.5)
 
-points = game.iterate(1000)
+game.iterate(10000)
 
-plt.scatter(*zip(*points))
-
-plt.axis("equal")
-plt.show()
+game.show(color=True)
+game.savepng("output.png", color=True)
