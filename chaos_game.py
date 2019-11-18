@@ -3,16 +3,30 @@ import matplotlib.pyplot as plt
 
 
 class ChaosGame:
-    def __init__(self, n, r):
-        """A chaos game object
+    """A chaos game object
         
-        Parameters
+        Attributes
+        ----------
+        n : int
+            Number of sides
+        r : float
+            Ratio between two points
+        st_point : ndarray (2, ) of int
+            Coordinates for the random starting point
+        corners : ndarray (n, 2) of int
+            Coordinates for the ngon corners
+        corner_list : ndarray (dicard:n, )
+            List of the randomly picked corner indexes
+        points : ndarray (discard:n, 2)
+            Coordinates for the randomly picked points
         ----------
         n : int
             Number of sides
         r : float
             Ratio between two points 
-        """
+    """
+
+    def __init__(self, n, r):
         assert isinstance(n, int), "n must be of type int"
         assert isinstance(r, float), "r must be of type float"
 
@@ -49,6 +63,15 @@ class ChaosGame:
         plt.show()
 
     def _starting_point(self):
+        """Returns a random starting point inside the ngon
+
+
+        
+        Returns
+        -------
+        point : ndarray (2, )
+            Random starting point
+        """
         w = np.zeros(self.n)
 
         for i in range(w.size):
@@ -66,6 +89,19 @@ class ChaosGame:
         return point
 
     def iterate(self, steps, discard=5):
+        """Generates points by picking a corner randomly
+        
+        Generated the first point based on the starting point. Iterates step
+        number of times, and discards the first generated points.
+
+        Parameters
+        ----------
+        steps : int
+            Number of iterations / points to be generated
+        discard : int, optional
+            Number of first points to be discarded, by default 5
+        """
+
         corner_list = np.zeros(shape=(steps,))
         random_corner = np.random.randint(self.n)
         corner_list[0] = random_corner
@@ -89,8 +125,19 @@ class ChaosGame:
         self.points = points[discard:]
 
     def plot(self, color=False, cmap="jet"):
+        """Creates a plot of the generated points
+        
+        Parameters
+        ----------
+        color : bool, optional
+            Uses a color gradient if True, and keeps the points black if False
+            , by default False
+        cmap : str, optional
+            [description], by default "jet"
+        """
+
         if color == True:
-            colors = self.corner_list
+            colors = self._compute_color()
         else:
             colors = "black"
 
@@ -99,10 +146,53 @@ class ChaosGame:
         plt.axis("equal")
 
     def show(self, color=False, cmap="jet"):
+        """Creates a plot of the generated points and shows it
+        
+        Parameters
+        ----------
+        color : bool, optional
+            Uses a color gradient if True, and keeps the points black if False
+            , by default False
+        cmap : str, optional
+            [description], by default "jet"
+        """
+
         self.plot(color=color, cmap=cmap)
         plt.show()
 
+    def _compute_color(self):
+        """Computes the points to be used as the color gradient when plotting
+        
+        Returns
+        -------
+        color : ndarray
+            [description]
+        """
+
+        color = np.zeros(shape=(self.corner_list.shape[0],))
+        color[0] = self.corner_list[0]
+
+        for i, corner in enumerate(self.corner_list, start=1):
+            if i >= color.shape[0]:
+                break
+
+            color[i] = (color[i - 1] + corner) / 2
+
+        return color
+
     def savepng(self, outfile, color=False, cmap="jet"):
+        """Creates a plot and saves it as a png file
+        
+        Parameters
+        ----------
+        outfile : String
+            Name of the output file, must be .png or have no file extension.
+        color : bool, optional
+            Uses a color gradient if True, and keeps the points black if False
+            , by default False
+        cmap : str, optional
+            [description], by default "jet"
+        """
 
         outfile = outfile.split(".")
 
@@ -114,9 +204,11 @@ class ChaosGame:
         plt.savefig(outfile[0] + ".png", dpi=300)
 
 
-game = ChaosGame(3, 0.5)
+figure_list = [[3, 1 / 2], [4, 1 / 3], [5, 1 / 3], [5, 3 / 8], [6, 1 / 3]]
 
-game.iterate(10000)
+for i, figure in enumerate(figure_list):
+    game = ChaosGame(figure[0], figure[1])
 
-game.show(color=True)
-game.savepng("output.png", color=True)
+    game.iterate(10000)
+    game.show(color=True)
+    game.savepng(f"output{i}.png", color=True)
