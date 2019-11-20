@@ -40,7 +40,7 @@ class ChaosGame:
         self.st_point = self._starting_point()
 
     def _generate_ngon(self):
-        """Generates the ngon for a given number of sides
+        """Generates the corners of a ngon, for a given number of sides
         """
         theta = np.linspace(0, (np.pi * 2), self.n + 1)
 
@@ -65,7 +65,8 @@ class ChaosGame:
     def _starting_point(self):
         """Returns a random starting point inside the ngon
 
-
+        Finds a random point inside the ngon by taking the coordinates 
+        of the corners and multiplying them with random weigths.
         
         Returns
         -------
@@ -122,6 +123,7 @@ class ChaosGame:
             )
 
         self.corner_list = corner_list[discard:]
+        self.colors = self._compute_color()
         self.points = points[discard:]
 
     def plot(self, color=False, cmap="jet"):
@@ -137,7 +139,7 @@ class ChaosGame:
         """
 
         if color == True:
-            colors = self._compute_color()
+            colors = self.colors
         else:
             colors = "black"
 
@@ -159,6 +161,7 @@ class ChaosGame:
 
         self.plot(color=color, cmap=cmap)
         plt.show()
+        plt.close()
 
     def _compute_color(self):
         """Computes the points to be used as the color gradient when plotting
@@ -170,13 +173,9 @@ class ChaosGame:
         """
 
         color = np.zeros(shape=(self.corner_list.shape[0],))
-        color[0] = self.corner_list[0]
 
-        for i, corner in enumerate(self.corner_list, start=1):
-            if i >= color.shape[0]:
-                break
-
-            color[i] = (color[i - 1] + corner) / 2
+        for i, corner in enumerate(self.corner_list):
+            color[i] = (color[i - 1] + self.corner_list[i]) / 2
 
         return color
 
@@ -202,13 +201,16 @@ class ChaosGame:
         self.plot(color=color, cmap=cmap)
 
         plt.savefig(outfile[0] + ".png", dpi=300)
+        plt.close()
 
 
-figure_list = [[3, 1 / 2], [4, 1 / 3], [5, 1 / 3], [5, 3 / 8], [6, 1 / 3]]
+if __name__ == "__main__":
 
-for i, figure in enumerate(figure_list):
-    game = ChaosGame(figure[0], figure[1])
+    figure_list = [[3, 1 / 2], [4, 1 / 3], [5, 1 / 3], [5, 3 / 8], [6, 1 / 3]]
 
-    game.iterate(10000)
-    game.show(color=True)
-    game.savepng(f"output{i}.png", color=True)
+    for i, figure in enumerate(figure_list):
+        game = ChaosGame(figure[0], figure[1])
+
+        game.iterate(10000)
+        game.show(color=True)
+        game.savepng(f"output{i}.png", color=True)
