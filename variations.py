@@ -5,8 +5,8 @@ from fern import Fern
 
 
 class Variations:
-    """Transforms a set of coordinates using a fractal flame algorithm
-    """
+    """Transforms a set of coordinates using a fractal flame algorithm."""
+    # Exercise 4a) Implementing the variations
 
     def __init__(self, x, y, colors="black"):
         self.colors = colors
@@ -23,11 +23,11 @@ class Variations:
         }
 
     def __call__(self, coefficients, variations):
-        """Returns coordinates transformed by a linear combination of variations
+        """Returns coordinates transformed by a linear combination of variations.
 
         Takes a list of variations and a list weights, and creates a linear 
         combination of variations. Then takes the list of x and y coordinates
-        and trensforms them using the combined variation.
+        and transforms them using the combined variation.
 
         Parameters
         ----------
@@ -35,7 +35,7 @@ class Variations:
             The weight given to each variation
         variations : List of str
             Names of the variations
-        
+
         Returns
         -------
         u, v : ndarray
@@ -77,9 +77,11 @@ class Variations:
         self.u = (self.theta / np.pi) * np.sin(np.pi * self.r)
         self.v = (self.theta / np.pi) * np.cos(np.pi * self.r)
 
+    # Exercise 4b) Testing the implementation
+
     def plot(self, cmap):
-        """Generates a plot of the transformed coordinates
-        
+        """Generates a plot of the transformed coordinates.
+
         Parameters
         ----------
         cmap : str
@@ -89,6 +91,8 @@ class Variations:
         plt.axis("off")
 
 
+# Exercise 4c) Plotting variations
+# Exercise 4c) Linear combinations of variations
 if __name__ == "__main__":
     N = 60
     grid_values = np.linspace(-1, 1, N)
@@ -96,8 +100,8 @@ if __name__ == "__main__":
     y_values = np.ones(N * N)
     for i in range(N):
         index = i * N
-        x_values[index : index + N] *= grid_values[i]
-        y_values[index : index + N] *= grid_values
+        x_values[index: index + N] *= grid_values[i]
+        y_values[index: index + N] *= grid_values
 
     coords_varia = Variations(x_values, y_values)
 
@@ -139,6 +143,7 @@ if __name__ == "__main__":
         plt.show()
         plt.close()
 
+    # Exercise 4d) Plotting linear combinations of variations
     def fern_variations():
         fern = Fern()
         fern.iterate(50000)
@@ -167,4 +172,3 @@ if __name__ == "__main__":
 
     triangle_variations()
     fern_variations()
-

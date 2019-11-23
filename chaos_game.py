@@ -3,8 +3,8 @@ import matplotlib.pyplot as plt
 
 
 class ChaosGame:
-    """A chaos game object
-        
+    """A chaos game object.
+
         Attributes
         ----------
         n : int
@@ -23,15 +23,20 @@ class ChaosGame:
         n : int
             Number of sides
         r : float
-            Ratio between two points 
+            Ratio between two points
     """
 
+    # Exercise 2a) Defining the class
     def __init__(self, n, r):
         assert isinstance(n, int), "n must be of type int"
         assert isinstance(r, float), "r must be of type float"
 
-        assert n >= 3, "n must be larger or equal to 3"
-        assert r > 0 and r < 1, "r must be between 0 and 1"
+        # assert n >= 3, "n must be larger or equal to 3"
+        # assert r > 0 and r < 1, "r must be between 0 and 1"
+        if not n >= 3:
+            raise ValueError("n must be larger or equal to 3")
+        if not 0 < r < 1:
+            raise ValueError("r must be between 0 and 1")
 
         self.n = n
         self.r = r
@@ -39,9 +44,9 @@ class ChaosGame:
         self._generate_ngon()
         self.st_point = self._starting_point()
 
+    # Exercise 2b) Generating the corners
     def _generate_ngon(self):
-        """Generates the corners of a ngon, for a given number of sides
-        """
+        """Generates the corners of a ngon, for a given number of sides."""
         theta = np.linspace(0, (np.pi * 2), self.n + 1)
 
         corners = np.zeros(shape=(self.n, 2))
@@ -55,19 +60,19 @@ class ChaosGame:
         self.corners = corners
 
     def plot_ngon(self):
-        """Plots the ngon
-        """
+        """Plots the ngon."""
         plt.scatter(*zip(*self.corners))
 
         plt.axis("equal")
         plt.show()
 
+    # Exercise 2c) Picking the starting point
     def _starting_point(self):
-        """Returns a random starting point inside the ngon
+        """Returns a random starting point inside the ngon.
 
         Finds a random point inside the ngon by taking the coordinates 
-        of the corners and multiplying them with random weigths.
-        
+        of the corners and multiplying them with random weights.
+
         Returns
         -------
         point : ndarray (2, )
@@ -78,7 +83,7 @@ class ChaosGame:
         for i in range(w.size):
             w[i] = np.random.random()
 
-        # Divide all weigths by the sum of the weigths so that they sum to one
+        # Divide all weights by the sum of the weights so that they sum to one
         w = w / np.sum(w)
 
         point = np.zeros(2)
@@ -89,9 +94,10 @@ class ChaosGame:
 
         return point
 
+    # Exercise 2d) Iterating
     def iterate(self, steps, discard=5):
-        """Generates points by picking a corner randomly
-        
+        """Generates points by picking a corner randomly.
+
         Generated the first point based on the starting point. Iterates step
         number of times, and discards the first generated points.
 
@@ -119,16 +125,18 @@ class ChaosGame:
             corner_list[i] = random_corner
 
             points[i] = (
-                self.r * points[i - 1] + (1 - self.r) * self.corners[random_corner]
+                self.r * points[i - 1] +
+                (1 - self.r) * self.corners[random_corner]
             )
 
         self.corner_list = corner_list[discard:]
         self.colors = self._compute_color()
         self.points = points[discard:]
 
+    # Exercise 2e) Plotting
     def plot(self, color=False, cmap="jet"):
-        """Creates a plot of the generated points
-        
+        """Creates a plot of the generated points.
+
         Parameters
         ----------
         color : bool, optional
@@ -148,8 +156,8 @@ class ChaosGame:
         plt.axis("equal")
 
     def show(self, color=False, cmap="jet"):
-        """Creates a plot of the generated points and shows it
-        
+        """Creates a plot of the generated points and shows it.
+
         Parameters
         ----------
         color : bool, optional
@@ -163,9 +171,10 @@ class ChaosGame:
         plt.show()
         plt.close()
 
+    # Exercise 2f) Plotting with gradient color
     def _compute_color(self):
-        """Computes the points to be used as the color gradient when plotting
-        
+        """Computes the points to be used as the color gradient when plotting.
+
         Returns
         -------
         color : ndarray
@@ -179,9 +188,10 @@ class ChaosGame:
 
         return color
 
+    # Exercise 2g) Saving the figure
     def savepng(self, outfile, color=False, cmap="jet"):
-        """Creates a plot and saves it as a png file
-        
+        """Creates a plot and saves it as a png file.
+
         Parameters
         ----------
         outfile : String
@@ -213,4 +223,4 @@ if __name__ == "__main__":
 
         game.iterate(10000)
         game.show(color=True)
-        game.savepng(f"output{i}.png", color=True)
+        game.savepng(f"chaos{i}.png", color=True)

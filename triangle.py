@@ -4,8 +4,8 @@ import matplotlib.pyplot as plt
 
 class Triangle:
     def __init__(self):
-        """Triangle oject
-        
+        """Triangle object.
+
         Attributes
         ----------
         corners : ndarray of int (3, 2)
@@ -19,11 +19,14 @@ class Triangle:
         """
         self.corners = self.create_triangle()
 
+    # Exercise 1a) Finding the corners of an equilateral triangle
     def create_triangle(self):
-        """Returns coordinates for the three corners of the triangle
-        
+        """Returns coordinates for the three corners of the triangle.
+
         Takes the coordinates of the first two corners as given, an calculates
         the coordinates of the last triangle so that it is equilateral.
+        By definition, given v1=(x1, y1), v2=(x2, y2), and v3=(x3, y3),
+        v3 = ((x1 + x2 + Sqrt[3]*(y1 - y2))/2, (y1 + y2 + Sqrt[3]*(x2 - x1))/2) 
 
         Returns
         -------
@@ -40,12 +43,13 @@ class Triangle:
 
         return [c0, c1, c2]
 
+    # Exercise 1b) Picking a starting point
     def random_starting_point(self):
         """Returns a random point inside the triangle
 
         finds a random point inside the triangle by taking the coordinates 
-        of the three corners and giving multiplying them with random weigths.
-        
+        of the three corners and giving multiplying them with random weights.
+
         Returns
         -------
         point: ndarray of floats
@@ -53,12 +57,12 @@ class Triangle:
         """
         c0, c1, c2 = self.corners[0], self.corners[1], self.corners[2]
 
-        w = np.zeros(3)  # Array to store weigths
+        w = np.zeros(3)  # Array to store weights
 
         for i in range(w.size):
             w[i] = np.random.random()
 
-        # Divide all weigths by the sum of the weigths so that they sum to one
+        # Divide all weights by the sum of the weights so that they sum to one
         w = w / np.sum(w)
 
         point = np.array(
@@ -70,13 +74,14 @@ class Triangle:
 
         return point
 
+    # Exercise 1c) Iterating within the n-gon
     def iterate(self, n):
-        """Generates points withing the triangle iteratively
+        """Generates points withing the triangle iteratively.
 
         Starts at a random point within the triangle and finds the point
         that is halfway between the current point and a randomly picked corner.
         Also sets the iteration parameter to be "black".
-        
+
         Parameters
         ----------
         n : int
@@ -84,7 +89,8 @@ class Triangle:
         """
         random_corner = np.random.randint(3)
         points = np.zeros(shape=(n, 2))
-        points[0] = (self.random_starting_point() + self.corners[random_corner]) / 2
+        points[0] = (self.random_starting_point() +
+                     self.corners[random_corner]) / 2
 
         for i in range(1, n):
             random_corner = np.random.randint(3)
@@ -93,13 +99,14 @@ class Triangle:
         self.points = points
         self.iteration = "black"
 
+    # Exercise 1e) Adding Color
     def iterate_color(self, n):
-        """Generates points and saves the randomly picked corners in an array
+        """Generates points and saves the randomly picked corners in an array.
 
         Does the same thing as iterate(), but also stores the randomly picked
         corners in an ndarray named color. Sets the iteration parameter to be
         "color".
-        
+
         Parameters
         ----------
         n : int
@@ -111,7 +118,8 @@ class Triangle:
         color[0] = random_corner
 
         points = np.zeros(shape=(n, 2))
-        points[0] = (self.random_starting_point() + self.corners[random_corner]) / 2
+        points[0] = (self.random_starting_point() +
+                     self.corners[random_corner]) / 2
 
         for i in range(1, n):
             random_corner = np.random.randint(3)
@@ -122,14 +130,15 @@ class Triangle:
         self.color = color
         self.iteration = "color"
 
+    # Exercise 1f) Alternative colors
     def iterate_gradient(self, n):
         """Generates points and assigns them a RGB color value
 
-        Does the same thing as iterate(), but also assigns a RGB xolor value
+        Does the same thing as iterate(), but also assigns a RGB color value
         to each point by having each corner corespond to an RBG value, and 
         for each point calculating:
         (previous points RGB value + current corners RGB value) / 2
-        so that the triangle has a continious color gradient.
+        so that the triangle has a continuous color gradient.
 
         Parameters
         ----------
@@ -151,7 +160,8 @@ class Triangle:
             color[0] = [0, 0, 1]
 
         points = np.zeros(shape=(n, 2))
-        points[0] = (self.random_starting_point() + self.corners[random_corner]) / 2
+        points[0] = (self.random_starting_point() +
+                     self.corners[random_corner]) / 2
 
         for i in range(1, n):
             random_corner = np.random.randint(3)
@@ -173,8 +183,9 @@ class Triangle:
         self.color = color
         self.iteration = "gradient"
 
+    # Exercise 1d) Plotting the points
     def plot(self):
-        """Plots the triangle
+        """Plots the triangle.
 
         Checks which iteration function was last called on, and plots the
         coresponding colors accordingly.

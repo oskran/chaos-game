@@ -1,9 +1,11 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+# Exercise 3a) Affine Functions
+
 
 class AffineTransform:
-    """Affine transformation function
+    """Affine transformation function.
 
     Takes a pair of coordinates, transforms them, and returns them.
 
@@ -27,7 +29,7 @@ class AffineTransform:
         The transformed coordinates
     """
 
-    def __init__(self, a, b, c, d, e, f):
+    def __init__(self, a=0, b=0, c=0, d=0, e=0, f=0):
         self.a = a
         self.b = b
         self.c = c
@@ -40,10 +42,12 @@ class AffineTransform:
             [x, y]
         ) + np.array([self.e, self.f])
 
+# Exercise 3b) Defining the functions
+
 
 class Fern:
-    """Uses AffineTransform to create Barnsley Fern
-    
+    """Uses AffineTransform to create Barnsley Fern.
+
     Returns
     -------
     [type]
@@ -61,23 +65,24 @@ class Fern:
         self.prob_cumulative = np.cumsum(probabilities)
 
     def choose_function(self):
-        """Chooses a transformation function at random
+        """Chooses a transformation function at random.
 
         Chooses based on a list of probabilities.
-        
+
         Returns
         -------
         AffineTransform
-            A randomly choosen transformation function
+            A randomly chosen transformation function
         """
         r = np.random.random()
         for j, p in enumerate(self.prob_cumulative):
             if r < p:
                 return self.functions[j]
 
+    # Exercise 3d) Iterating the Fern
     def iterate(self, n):
         """Generates points iteratively by using affine transformations
-        
+
         Parameters
         ----------
         n : int
@@ -94,9 +99,10 @@ class Fern:
 
         self.points = points
 
+    # Exercise 3e) Plotting the Fern
     def plot(self, s=1, c="green"):
-        """Plots the fern
-        
+        """Plots the fern.
+
         Parameters
         ----------
         s : int, optional
