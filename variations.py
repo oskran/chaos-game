@@ -146,7 +146,6 @@ if __name__ == "__main__":
         plt.show()
         plt.close()
 
-    # Exercise 4d) Plotting linear combinations of variations
     def fern_variations():
         fern = Fern()
         fern.iterate(50000)
@@ -173,6 +172,69 @@ if __name__ == "__main__":
 
         plt.show()
 
+    # Exercise 4d) Plotting linear combinations of variations
+    def linear_combinations_fern():
+        random_coefficients = []
+        for i in range(4):
+            random_coefficients.append(np.random.random())
+
+        fern = Fern()
+        fern.iterate(50000)
+        points = fern.points
+
+        # Normalize between -1 and 1
+        points[:, 0] = np.interp(
+            points[:, 0], (points[:, 0].min(), points[:, 0].max()), (-1, +1)
+        )
+        points[:, 1] = np.interp(
+            points[:, 1], (points[:, 1].min(), points[:, 1].max()), (-1, +1)
+        )
+
+        fern_vars = Variations(points[:, 0], -points[:, 1], colors="green")
+
+        plt.figure(10, figsize=(9, 9))
+
+        for i, variation in enumerate(random_coefficients):
+            plt.subplot(221 + i)
+            plot_grid()
+            fern_vars(
+                [random_coefficients[i], 1 - random_coefficients[i]],
+                ["swirl", "linear"],
+            )
+            fern_vars.plot("jet")
+            plt.title(random_coefficients[i])
+
+        plt.show()
+        plt.close()
+
+    def linear_combinations_ngon():
+        random_coefficients = []
+        for i in range(4):
+            random_coefficients.append(np.random.random())
+
+        triangle = ChaosGame(4, 1 / 3)
+        triangle.iterate(10000)
+        tri_variations = Variations(
+            triangle.points[:, 0], -triangle.points[:, 1], colors=triangle.colors
+        )
+
+        plt.figure(10, figsize=(9, 9))
+
+        for i, variation in enumerate(variations):
+            plt.subplot(221 + i)
+            plot_grid()
+            tri_variations(
+                [random_coefficients[i], 1 - random_coefficients[i]],
+                ["handkerchief", "disc"],
+            )
+            tri_variations.plot("jet")
+            plt.title(random_coefficients[i])
+
+        plt.show()
+        plt.close()
+
     grid()
     triangle_variations()
     fern_variations()
+    linear_combinations_fern()
+    linear_combinations_ngon()
