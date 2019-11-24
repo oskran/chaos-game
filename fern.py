@@ -42,6 +42,7 @@ class AffineTransform:
             [x, y]
         ) + np.array([self.e, self.f])
 
+
 # Exercise 3b) Defining the functions
 
 
@@ -112,7 +113,7 @@ class Fern:
         """
         plt.scatter(*zip(*self.points), s=s, c=c)
         plt.axis("equal")
-        plt.savefig("barnsley_fern.png", dpi=300)
+        plt.savefig("figures/barnsley_fern.png", dpi=300)
         plt.show()
 
 

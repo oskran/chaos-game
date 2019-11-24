@@ -125,8 +125,7 @@ class ChaosGame:
             corner_list[i] = random_corner
 
             points[i] = (
-                self.r * points[i - 1] +
-                (1 - self.r) * self.corners[random_corner]
+                self.r * points[i - 1] + (1 - self.r) * self.corners[random_corner]
             )
 
         self.corner_list = corner_list[discard:]
@@ -210,7 +209,7 @@ class ChaosGame:
 
         self.plot(color=color, cmap=cmap)
 
-        plt.savefig(outfile[0] + ".png", dpi=300)
+        plt.savefig("figures/" + outfile[0] + ".png", dpi=300)
         plt.close()
 
 
