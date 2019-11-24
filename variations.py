@@ -6,6 +6,7 @@ from fern import Fern
 
 class Variations:
     """Transforms a set of coordinates using a fractal flame algorithm."""
+
     # Exercise 4a) Implementing the variations
 
     def __init__(self, x, y, colors="black"):
@@ -94,16 +95,6 @@ class Variations:
 # Exercise 4c) Plotting variations
 # Exercise 4c) Linear combinations of variations
 if __name__ == "__main__":
-    N = 60
-    grid_values = np.linspace(-1, 1, N)
-    x_values = np.ones(N * N)
-    y_values = np.ones(N * N)
-    for i in range(N):
-        index = i * N
-        x_values[index: index + N] *= grid_values[i]
-        y_values[index: index + N] *= grid_values
-
-    coords_varia = Variations(x_values, y_values)
 
     def plot_grid():
         plt.plot([-1, 1, 1, -1, -1], [-1, -1, 1, 1, -1], color="grey")
@@ -112,17 +103,29 @@ if __name__ == "__main__":
 
     variations = ["linear", "handkerchief", "swirl", "disc"]
 
-    plt.figure(10, figsize=(9, 9))
+    def grid():
+        N = 60
+        grid_values = np.linspace(-1, 1, N)
+        x_values = np.ones(N * N)
+        y_values = np.ones(N * N)
+        for i in range(N):
+            index = i * N
+            x_values[index : index + N] *= grid_values[i]
+            y_values[index : index + N] *= grid_values
 
-    for i, variation in enumerate(variations):
-        plt.subplot(221 + i)
-        plot_grid()
-        coords_varia.collection[variation]()
-        coords_varia.plot("jet")
-        plt.title(variation)
+        coords_varia = Variations(x_values, y_values)
 
-    plt.show()
-    plt.close()
+        plt.figure(10, figsize=(9, 9))
+
+        for i, variation in enumerate(variations):
+            plt.subplot(221 + i)
+            plot_grid()
+            coords_varia.collection[variation]()
+            coords_varia.plot("jet")
+            plt.title(variation)
+
+        plt.show()
+        plt.close()
 
     def triangle_variations():
         triangle = ChaosGame(4, 1 / 3)
@@ -170,5 +173,6 @@ if __name__ == "__main__":
 
         plt.show()
 
+    grid()
     triangle_variations()
     fern_variations()
