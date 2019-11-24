@@ -41,3 +41,6 @@ def test_file_is_png():
 
         game.savepng("filename.jpeg")
 
+
+if __name__ == '__main__':
+    pytest.main()
