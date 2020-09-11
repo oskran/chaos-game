@@ -42,7 +42,6 @@ class Triangle:
 
         return [c0, c1, c2]
 
-    # Exercise 1b) Picking a starting point
     def random_starting_point(self):
         """Returns a random point inside the triangle
 
@@ -73,7 +72,6 @@ class Triangle:
 
         return point
 
-    # Exercise 1c) Iterating within the n-gon
     def iterate(self, n):
         """Generates points withing the triangle iteratively.
 
@@ -97,7 +95,6 @@ class Triangle:
         self.points = points
         self.iteration = "black"
 
-    # Exercise 1e) Adding Color
     def iterate_color(self, n):
         """Generates points and saves the randomly picked corners in an array.
 
@@ -127,7 +124,6 @@ class Triangle:
         self.color = color
         self.iteration = "color"
 
-    # Exercise 1f) Alternative colors
     def iterate_gradient(self, n):
         """Generates points and assigns them a RGB color value
 
@@ -179,7 +175,6 @@ class Triangle:
         self.color = color
         self.iteration = "gradient"
 
-    # Exercise 1d) Plotting the points
     def plot(self):
         """Plots the triangle.
 
