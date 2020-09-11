@@ -1,3 +1,5 @@
-# H19_project3_oskarra_alizamij
+Chaos game
 
-URL: https://github.uio.no/IN1910/H19_project3_oskarra_alizamij
+Project in IN1910.
+Creates fractals using a polygon and a random initial point.
+<a href="https://en.wikipedia.org/wiki/Chaos_game">Read more</a>
