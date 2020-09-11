@@ -1,8 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Exercise 3a) Affine Functions
-
 
 class AffineTransform:
     """Affine transformation function.
@@ -43,9 +41,6 @@ class AffineTransform:
         ) + np.array([self.e, self.f])
 
 
-# Exercise 3b) Defining the functions
-
-
 class Fern:
     """Uses AffineTransform to create Barnsley Fern.
 
@@ -80,7 +75,6 @@ class Fern:
             if r < p:
                 return self.functions[j]
 
-    # Exercise 3d) Iterating the Fern
     def iterate(self, n):
         """Generates points iteratively by using affine transformations
 
@@ -100,7 +94,6 @@ class Fern:
 
         self.points = points
 
-    # Exercise 3e) Plotting the Fern
     def plot(self, s=1, c="green"):
         """Plots the fern.
 

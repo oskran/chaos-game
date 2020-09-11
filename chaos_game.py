@@ -26,7 +26,6 @@ class ChaosGame:
             Ratio between two points
     """
 
-    # Exercise 2a) Defining the class
     def __init__(self, n, r):
         assert isinstance(n, int), "n must be of type int"
         assert isinstance(r, float), "r must be of type float"
@@ -44,7 +43,6 @@ class ChaosGame:
         self._generate_ngon()
         self.st_point = self._starting_point()
 
-    # Exercise 2b) Generating the corners
     def _generate_ngon(self):
         """Generates the corners of a ngon, for a given number of sides."""
         theta = np.linspace(0, (np.pi * 2), self.n + 1)
@@ -66,7 +64,6 @@ class ChaosGame:
         plt.axis("equal")
         plt.show()
 
-    # Exercise 2c) Picking the starting point
     def _starting_point(self):
         """Returns a random starting point inside the ngon.
 
@@ -94,7 +91,6 @@ class ChaosGame:
 
         return point
 
-    # Exercise 2d) Iterating
     def iterate(self, steps, discard=5):
         """Generates points by picking a corner randomly.
 
@@ -132,7 +128,6 @@ class ChaosGame:
         self.colors = self._compute_color()
         self.points = points[discard:]
 
-    # Exercise 2e) Plotting
     def plot(self, color=False, cmap="jet"):
         """Creates a plot of the generated points.
 
@@ -170,7 +165,6 @@ class ChaosGame:
         plt.show()
         plt.close()
 
-    # Exercise 2f) Plotting with gradient color
     def _compute_color(self):
         """Computes the points to be used as the color gradient when plotting.
 
@@ -187,7 +181,6 @@ class ChaosGame:
 
         return color
 
-    # Exercise 2g) Saving the figure
     def savepng(self, outfile, color=False, cmap="jet"):
         """Creates a plot and saves it as a png file.
 

@@ -19,7 +19,6 @@ class Triangle:
         """
         self.corners = self.create_triangle()
 
-    # Exercise 1a) Finding the corners of an equilateral triangle
     def create_triangle(self):
         """Returns coordinates for the three corners of the triangle.
 
@@ -89,8 +88,7 @@ class Triangle:
         """
         random_corner = np.random.randint(3)
         points = np.zeros(shape=(n, 2))
-        points[0] = (self.random_starting_point() +
-                     self.corners[random_corner]) / 2
+        points[0] = (self.random_starting_point() + self.corners[random_corner]) / 2
 
         for i in range(1, n):
             random_corner = np.random.randint(3)
@@ -118,8 +116,7 @@ class Triangle:
         color[0] = random_corner
 
         points = np.zeros(shape=(n, 2))
-        points[0] = (self.random_starting_point() +
-                     self.corners[random_corner]) / 2
+        points[0] = (self.random_starting_point() + self.corners[random_corner]) / 2
 
         for i in range(1, n):
             random_corner = np.random.randint(3)
@@ -160,8 +157,7 @@ class Triangle:
             color[0] = [0, 0, 1]
 
         points = np.zeros(shape=(n, 2))
-        points[0] = (self.random_starting_point() +
-                     self.corners[random_corner]) / 2
+        points[0] = (self.random_starting_point() + self.corners[random_corner]) / 2
 
         for i in range(1, n):
             random_corner = np.random.randint(3)

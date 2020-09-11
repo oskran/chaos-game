@@ -7,8 +7,6 @@ from fern import Fern
 class Variations:
     """Transforms a set of coordinates using a fractal flame algorithm."""
 
-    # Exercise 4a) Implementing the variations
-
     def __init__(self, x, y, colors="black"):
         self.colors = colors
         self.x = x
@@ -78,8 +76,6 @@ class Variations:
         self.u = (self.theta / np.pi) * np.sin(np.pi * self.r)
         self.v = (self.theta / np.pi) * np.cos(np.pi * self.r)
 
-    # Exercise 4b) Testing the implementation
-
     def plot(self, cmap):
         """Generates a plot of the transformed coordinates.
 
@@ -92,8 +88,6 @@ class Variations:
         plt.axis("off")
 
 
-# Exercise 4c) Plotting variations
-# Exercise 4c) Linear combinations of variations
 if __name__ == "__main__":
 
     def plot_grid():
@@ -172,7 +166,6 @@ if __name__ == "__main__":
 
         plt.show()
 
-    # Exercise 4d) Plotting linear combinations of variations
     def linear_combinations_fern():
         random_coefficients = []
         for i in range(4):
